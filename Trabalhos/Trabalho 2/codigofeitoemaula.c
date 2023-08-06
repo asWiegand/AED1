@@ -27,7 +27,7 @@ int count_students_unable_to_eat(int students[], int sandwiches[], int num_stude
             queue[num_students - 1] = temp;
         }
 
-        int all_same = 0;
+        int all_same = 1;
         for (int i = 1; i < num_students; i++) {
             if (queue[i] != queue[0]) {
                 all_same = 0;
