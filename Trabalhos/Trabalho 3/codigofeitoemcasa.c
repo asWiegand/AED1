@@ -31,7 +31,7 @@ bool isCousins(struct TreeNode* root, int x, int y) {
     int yDepth = findDepth(root, y, -1, 0);
 
     if (xDepth != -1 && yDepth != -1 && xDepth == yDepth) {
-        return findDepth(root, x, -1, 0) != findDepth(root, y, -1, 0);
+        return findDepth(root, x, -1, 0) == findDepth(root, y, -1, 0);
     }
 
     return false;
@@ -51,10 +51,10 @@ int main() {
     root->right->right = (struct TreeNode*)malloc(sizeof(struct TreeNode));
     root->right->right->val = 5;
 
-    root->left->right->left = NULL; // Setting the left child of node with value 4
-    root->left->right->right = NULL; // Setting the right child of node with value 4
-    root->right->right->left = NULL; // Setting the left child of node with value 5
-    root->right->right->right = NULL; // Setting the right child of node with value 5
+    root->left->right->left = NULL; 
+    root->left->right->right = NULL;
+    root->right->right->left = NULL; 
+    root->right->right->right = NULL; 
 
     int x = 4, y = 3;
     bool result = isCousins(root, x, y);
