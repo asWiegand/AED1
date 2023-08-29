@@ -159,11 +159,6 @@ void matrix_destroy(Matrix* m) {
     }
     free(m); 
 Matrix* matrix_add(Matrix* m, Matrix* n) {
-    
-    if (m->line != n->line || m->column != n->column) {
-        fprintf(stderr, "Matrizes com dimensões diferentes.\n");
-        return NULL;
-    }
 
     Matrix* result = matrix_create();
 
