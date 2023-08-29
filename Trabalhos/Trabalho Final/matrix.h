@@ -28,9 +28,9 @@ Matrix* matrix_create(void) {
     
     head->right = head;
     head->below = head;
-    head->line = -1; // Cabeça da linha
-    head->column = -1; // Cabeça da coluna
-    head->info = 0.0; // Valor padrão para a célula cabeça
+    head->line = -1; 
+    head->column = -1;
+    head->info = 0.0; 
 
     int numRows, numCols;
 
@@ -65,7 +65,7 @@ float matrix_getelem(Matrix* m, int x, int y) {
         }
         row_head = row_head->below;
     }
-    return 0.0; // Valor padrão para elementos não encontrados
+    return 0.0; 
 }
 
 void matrix_setelem(Matrix* m, int x, int y, float elem) {
@@ -77,18 +77,16 @@ void matrix_setelem(Matrix* m, int x, int y, float elem) {
     }
     
     if (row_head->line != x) {
-        // A linha x ainda não existe, precisamos criá-la
         Matrix* new_row = (Matrix*)malloc(sizeof(Matrix));
         if (new_row == NULL) {
             perror("Erro na alocação de memória");
             exit(EXIT_FAILURE);
         }
         new_row->line = x;
-        new_row->column = -1; // Cabeça da coluna
+        new_row->column = -1;
         new_row->info = 0.0;
         new_row->right = new_row;
         
-        // Inserir nova linha
         prev_row->below = new_row;
         new_row->below = row_head;
         row_head = new_row;
@@ -103,10 +101,8 @@ void matrix_setelem(Matrix* m, int x, int y, float elem) {
     }
     
     if (current->column == y) {
-        // O elemento (x, y) já existe, atualize-o
         current->info = elem;
     } else {
-        // O elemento (x, y) não existe, crie-o
         Matrix* new_elem = (Matrix*)malloc(sizeof(Matrix));
         if (new_elem == NULL) {
             perror("Erro na alocação de memória");
@@ -116,7 +112,6 @@ void matrix_setelem(Matrix* m, int x, int y, float elem) {
         new_elem->column = y;
         new_elem->info = elem;
         
-        // Inserir novo elemento
         prev->right = new_elem;
         new_elem->right = current;
     }
@@ -125,7 +120,6 @@ void matrix_setelem(Matrix* m, int x, int y, float elem) {
 void matrix_print(Matrix* m) {
     int maxLine = -1, maxColumn = -1;
 
-    // Encontre o número máximo de linhas e colunas com base nos elementos existentes
     Matrix* row_head = m->below;
     while (row_head != m) {
         Matrix* current = row_head->right;
@@ -141,7 +135,6 @@ void matrix_print(Matrix* m) {
         row_head = row_head->below;
     }
 
-    // Imprima a matriz preenchendo com zero onde não há valores
     for (int i = 1; i <= maxLine; i++) {
         for (int j = 1; j <= maxColumn; j++) {
             float elem = matrix_getelem(m, i, j);
@@ -158,25 +151,22 @@ void matrix_destroy(Matrix* m) {
         while (current != row_head) {
             Matrix* temp = current;
             current = current->right;
-            free(temp); // Liberar cada célula da matriz
+            free(temp);
         }
         Matrix* temp = row_head;
         row_head = row_head->below;
-        free(temp); // Liberar a cabeça da linha
+        free(temp);
     }
-    free(m); // Liberar a cabeça da matriz
-}
+    free(m); 
 Matrix* matrix_add(Matrix* m, Matrix* n) {
-    // Check if the matrices have compatible dimensions
+    
     if (m->line != n->line || m->column != n->column) {
-        fprintf(stderr, "Matrices have incompatible dimensions for addition.\n");
+        fprintf(stderr, "Matrizes com dimensões diferentes.\n");
         return NULL;
     }
 
-    // Create a new matrix to store the result
     Matrix* result = matrix_create();
 
-    // Iterate through rows and columns to perform element-wise addition
     Matrix* row_head_m = m->below;
     while (row_head_m != m) {
         Matrix* current_m = row_head_m->right;
@@ -195,10 +185,8 @@ Matrix* matrix_add(Matrix* m, Matrix* n) {
 
 
 Matrix* matrix_transpose(Matrix* m) {
-    // Crie uma nova matriz para armazenar a matriz transposta
     Matrix* transpose = matrix_create();
 
-    // Itere pelos elementos da matriz original e insira-os na matriz transposta
     Matrix* row_head = m->below;
     while (row_head != m) {
         Matrix* current = row_head->right;
