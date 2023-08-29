@@ -39,12 +39,11 @@ Matrix* matrix_create(void) {
 
 
     printf("Digite os elementos da matriz A:\n");
-    for (int l = 1; l <= numRows; l++) {
-        for (int k = 1; k <= numCols; k++) {
+    for (int i = 1; i <= numRows; i++) {
+        for (int j = 1; j <= numCols; j++) {
             float elem;
-            int i, j;
-            scanf("%d %d %f", &i, &j, &elem);
-            matrix_setelem(head, i, j, elem);
+            scanf("%d %d %f", &x, &y, &elem);
+            matrix_setelem(head, x, y, elem);
         }
     }
     return head;
